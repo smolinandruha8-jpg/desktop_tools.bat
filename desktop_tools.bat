@@ -21,6 +21,7 @@ echo 4. rename the disk C (script need a start from administrator + change text 
 echo 5. run ALL files (be careful!)
 echo 6. kalendar
 echo 7. run all files (with cooldown)
+echo 8.
 echo /=======================================================================/
 echo vx - credits
 
