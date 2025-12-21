@@ -22,6 +22,7 @@ echo 5. run ALL files (be careful!)
 echo 6. kalendar
 echo 7. run all files (with cooldown)
 echo 8.
+echo 9.
 echo /=======================================================================/
 echo vx - credits
 
