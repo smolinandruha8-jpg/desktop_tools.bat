@@ -8,9 +8,10 @@ chcp 65001
 set desktop_path=%USERPROFILE%\Desktop
 cls
 
+:bdb
 cls
 @echo off
-echo /=================v2025.1===========(Default)==========================/
+echo /=================v2025.2===========(Default)==========================/
 echo Welcome to desktop tools
 echo Key codes:
 echo =======================================================================
@@ -74,5 +75,4 @@ if %keycode% equ "vx" (
   echo Script editor - DevTO
   echo ==============================
   echo 
-)
-pause
+goto bdb
