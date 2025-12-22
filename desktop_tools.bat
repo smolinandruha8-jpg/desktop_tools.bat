@@ -11,7 +11,7 @@ cls
 :bdb
 cls
 @echo off
-echo /=================v2025.2===========(Default)==========================/
+echo /=================v2025.3===========(Default)==========================/
 echo Welcome to desktop tools
 echo Key codes:
 echo =======================================================================
@@ -38,6 +38,7 @@ md MyFolder
 echo folder created successfully
 echo moving folder...
 move MyFolder %USERPROFILE%\Desktop\
+pause
 )
 if %keycode% equ 3 (
 cls
@@ -50,6 +51,7 @@ if %keycode% equ 4 (
 cls
 :: //DISK NAME HERE//
 label C:sjdasjdka
+pause
 )
 if %keycode% equ 5 (
 cls
@@ -59,6 +61,7 @@ if %keycode% equ 6 (
 cls
 echo Date: %date%
 echo Time: %time%
+pause
 )
 if %keycode% equ 7 (
   for %%f in ("%USERPROFILE%\Desktop\*") do (
@@ -74,5 +77,7 @@ if %keycode% equ "vx" (
   echo ==============================
   echo Script editor - DevTO
   echo ==============================
-  echo 
+  echo
+  pause
+)
 goto bdb
