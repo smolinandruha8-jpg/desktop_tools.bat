@@ -11,7 +11,7 @@ cls
 :bdb
 cls
 @echo off
-echo /=================v2025.3===========(Default)==========================/
+echo /=================v2025.4===========(Default)==========================/
 echo Welcome to desktop tools
 echo Key codes:
 echo =======================================================================
@@ -22,6 +22,8 @@ echo 4. rename the disk C (script need a start from administrator + change text 
 echo 5. run ALL files (be careful!)
 echo 6. kalendar
 echo 7. run all files (with cooldown)
+echo 8. make file as shell:startup
+echo 9. check the .bat file for suspicious manipulations
 echo /=======================================================================/
 echo vx - credits
 
@@ -70,6 +72,23 @@ if %keycode% equ 7 (
         echo Starting file: %%f
     )
    )
+)
+if %keycode% equ 8 (
+set /p pt=Enter path to your file
+move %pt% %USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+)
+if %keycode% equ 9 (
+  cls
+  :: var
+  set /p pth=Enter path to your .bat file
+  :: eth
+  findstr /C:"shutdown -s -t N" pth
+  findstr /C:"dir/s" pth
+  findstr /C:"color a" pth
+  findstr /C:"color 2" pth
+  :: main
+  echo if you see text like "dir/s" or "shutdown" this file is suspicious
+  pause
 )
 
 if %keycode% equ "vx" (
