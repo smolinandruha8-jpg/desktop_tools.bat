@@ -24,6 +24,7 @@ echo 6. kalendar
 echo 7. run all files (with cooldown)
 echo 8. make file as shell:startup
 echo 9. check the .bat file for suspicious manipulations
+echo 10.
 echo /=======================================================================/
 echo vx - credits
 
