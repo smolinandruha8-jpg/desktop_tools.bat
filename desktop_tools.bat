@@ -85,6 +85,7 @@ if %keycode% equ 10 (
 
 :start_game
 cls
+echo Welcome to tic-tac-toe!
 set /p "user1=[PLAYER 1] Username: "
 set /p "user2=[PLAYER 2] Username: "
 
