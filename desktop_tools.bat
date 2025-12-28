@@ -78,85 +78,106 @@ set /p pt=Enter path to your file
 move %pt% %USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 )
 if %keycode% equ 10 (
-    goto :start_game
+    goto :menu
 ) else (
     goto :bdb
 )
 
-:start_game
+:menu
+setlocal enabledelayedexpansion
 cls
-echo Welcome to tic-tac-toe!
-set /p "user1=[PLAYER 1] Username: "
-set /p "user2=[PLAYER 2] Username: "
+echo ===============================
+echo      TIC-TAC-TOE LAN 
+echo ===============================
+echo 1. Offline (Local Play)
+echo 2. Online (Local Network)
+echo 3. Exit
+set /p mode="Choose mode (1-3): "
 
-set "winned=no"
-
+:: Initialize grid
 set "a1= " & set "a2= " & set "a3= "
 set "b1= " & set "b2= " & set "b3= "
 set "c1= " & set "c2= " & set "c3= "
 
-:ttt
+if "%mode%"=="1" goto :offline
+if "%mode%"=="2" goto :online_setup
+if "%mode%"=="3" exit
+goto :menu
+
+:online_setup
 cls
-echo   a  b  c
-echo 1[%a1%][%b1%][%c1%]
-echo 2[%a2%][%b2%][%c2%]
-echo 3[%a3%][%b3%][%c3%]
-echo.
+echo ONLINE SETUP
+echo 1. I am Player X (Starts first)
+echo 2. I am Player 0 (Wait for move)
+set /p side="Select your side: "
+set /p port="Enter Port (e.g., 12345): "
+set /p ip="Enter Friend's LOCAL IP: "
 
-set /p "usp1=%user1%, enter cell (like a1 or b2): "
-if /i "%usp1%"=="a1" if "%a1%"==" " set "a1=X"
-if /i "%usp1%"=="a2" if "%a2%"==" " set "a2=X"
-if /i "%usp1%"=="a3" if "%a3%"==" " set "a3=X"
-if /i "%usp1%"=="b1" if "%b1%"==" " set "b1=X"
-if /i "%usp1%"=="b2" if "%b2%"==" " set "b2=X"
-if /i "%usp1%"=="b3" if "%b3%"==" " set "b3=X"
-if /i "%usp1%"=="c1" if "%c1%"==" " set "c1=X"
-if /i "%usp1%"=="c2" if "%c2%"==" " set "c2=X"
-if /i "%usp1%"=="c3" if "%c3%"==" " set "c3=X"
+if "%side%"=="1" (goto :loopX) else (goto :loop0)
 
-:: WIN SYSTEM (user 1)
-if /i "%a1%"=="X" if "%a2%"=="X" if "%a3%"=="X" echo %user1% WIN!
-if /i "%b1%"=="X" if "%b2%"=="X" if "%b3%"=="X" echo %user1% WIN!
-if /i "%c1%"=="X" if "%c2%"=="X" if "%c3%"=="X" echo %user1% WIN!
-
-if /i "%a1%"=="X" if "%b1%"=="X" if "%c1%"=="X" echo %user1% WIN!
-if /i "%a2%"=="X" if "%b2%"=="X" if "%c2%"=="X" echo %user1% WIN!
-if /i "%a3%"=="X" if "%b3%"=="X" if "%c3%"=="X" echo %user1% WIN!
-
-if /i "%a3%"=="X" if "%b2%"=="X" if "%c1%"=="X" echo %user1% WIN!
-if /i "%a1%"=="X" if "%b2%"=="X" if "%c3%"=="X" echo %user1% WIN!
-pause
+:loopX
+cls
+call :draw
+set /p move="Your move (a1-c3): "
+:: Send move without trailing spaces
+<nul set /p="%move%" | nc.exe -w 2 %ip% %port%
+:: Update locally (X)
+call :update %move% X
 
 cls
-echo   a  b  c
-echo 1[%a1%][%b1%][%c1%]
-echo 2[%a2%][%b2%][%c2%]
-echo 3[%a3%][%b3%][%c3%]
+call :draw
+echo Waiting for opponent's move...
+if exist temp.txt del temp.txt
+nc.exe -l -p %port% > temp.txt
+set /p fmove=<temp.txt
+call :update %fmove% 0
+goto :loopX
+
+:loop0
+cls
+call :draw
+echo Waiting for opponent's move...
+if exist temp.txt del temp.txt
+nc.exe -l -p %port% > temp.txt
+set /p fmove=<temp.txt
+call :update %fmove% X
+
+cls
+call :draw
+set /p move="Your move (a1-c3): "
+<nul set /p="%move%" | nc.exe -w 2 %ip% %port%
+call :update %move% 0
+goto :loop0
+
+:offline
+cls
+call :draw
+set /p move="Player X move: "
+call :update %move% X
+cls
+call :draw
+set /p move="Player 0 move: "
+call :update %move% 0
+goto :offline
+
+:draw
 echo.
-echo %user1% make his move
+echo    a   b   c
+echo 1 [!a1!] [!b1!] [!c1!]
+echo 2 [!a2!] [!b2!] [!c2!]
+echo 3 [!a3!] [!b3!] [!c3!]
+echo.
+exit /b
 
-set /p "usp2=%user2%, enter cell (like a1 or b2): "
-if /i "%usp2%"=="a1" if "%a1%"==" " set "a1=0"
-if /i "%usp2%"=="a2" if "%a2%"==" " set "a2=0"
-if /i "%usp2%"=="a3" if "%a3%"==" " set "a3=0"
-if /i "%usp2%"=="b1" if "%b1%"==" " set "b1=0"
-if /i "%usp2%"=="b2" if "%b2%"==" " set "b2=0"
-if /i "%usp2%"=="b3" if "%b3%"==" " set "b3=0"
-if /i "%usp2%"=="c1" if "%c1%"==" " set "c1=0"
-if /i "%usp2%"=="c2" if "%c2%"==" " set "c2=0"
-if /i "%usp2%"=="c3" if "%c3%"==" " set "c3=0"
-
-:: WIN SYSTEM (user 2)
-if /i "%a1%"=="0" if "%a2%"=="0" if "%a3%"=="0" echo %user2% WIN!
-if /i "%b1%"=="0" if "%b2%"=="0" if "%b3%"=="0" echo %user2% WIN!
-if /i "%c1%"=="0" if "%c2%"=="0" if "%c3%"=="0" echo %user2% WIN!
-
-if /i "%a1%"=="0" if "%b1%"=="0" if "%c1%"=="0" echo %user2% WIN!
-if /i "%a2%"=="0" if "%b2%"=="0" if "%c2%"=="0" echo %user2% WIN!
-if /i "%a3%"=="0" if "%b3%"=="0" if "%c3%"=="0" echo %user2% WIN!
-
-if /i "%a3%"=="0" if "%b2%"=="0" if "%c1%"=="0" echo %user2% WIN!
-if /i "%a1%"=="0" if "%b2%"=="0" if "%c3%"=="0" echo %user2% WIN!
-pause
-
-goto :ttt
+:update
+:: %1 is cell, %2 is symbol (X/0)
+if /i "%1"=="a1" set "a1=%2"
+if /i "%1"=="a2" set "a2=%2"
+if /i "%1"=="a3" set "a3=%2"
+if /i "%1"=="b1" set "b1=%2"
+if /i "%1"=="b2" set "b2=%2"
+if /i "%1"=="b3" set "b3=%2"
+if /i "%1"=="c1" set "c1=%2"
+if /i "%1"=="c2" set "c2=%2"
+if /i "%1"=="c3" set "c3=%2"
+exit /b
