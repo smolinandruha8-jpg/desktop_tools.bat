@@ -2,7 +2,13 @@ echo off
 title desktop tools
 findstr /C:no properties.txt
 if %errorlevel% equ 0 (
-chcp 65001
+chcp 65001>nul
+)
+
+if not exist abc.txt (
+goto :register
+) else (
+goto :login
 )
 
 set desktop_path=%USERPROFILE%\Desktop
@@ -181,3 +187,33 @@ if /i "%1"=="c1" set "c1=%2"
 if /i "%1"=="c2" set "c2=%2"
 if /i "%1"=="c3" set "c3=%2"
 exit /b
+
+:register
+cls
+echo Please enter your new password and confirm it for your security and protection from attacks.
+set /p password=Enter the password that you will need later when using (remember it)...
+set /p password2=Enter it again...
+if %password2% equ %password% (
+echo Success!
+Echo %password% > abc.txt
+goto :bdb
+) else (
+goto :register
+)
+:login
+cls
+echo We found an account.
+set /p pas=Please enter the password: 
+
+find "%pas%" abc.txt >nul
+
+if %errorlevel% equ 0 (
+    echo Access Granted!
+    pause
+    goto :bdb
+) else (
+    echo [!] WRONG PASSWORD!
+    pause
+    goto :login
+)
+
