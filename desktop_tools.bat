@@ -123,8 +123,8 @@ cls
 echo ONLINE SETUP
 echo 1. I am Player X (Starts first)
 echo 2. I am Player 0 (Wait for move)
-cls
 set /p side="Select your side: "
+cls
 set /p port="Enter Port (e.g., 12345): "
 cls
 if not exist last_ip.txt (
