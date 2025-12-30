@@ -31,7 +31,7 @@ echo 6. kalendar
 echo 7. run all files (with cooldown)
 echo 10. tic-tac-toe
 echo /=======================================================================/
-echo vx - credits
+echo 11. mod special
 
 :://MAIN//
 set /p keycode=Enter your key code...
