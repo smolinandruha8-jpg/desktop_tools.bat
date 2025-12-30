@@ -1,4 +1,5 @@
 echo off
+setlocal enabledelayedexpansion
 title desktop tools
 findstr /C:no properties.txt
 if %errorlevel% equ 0 (
@@ -17,7 +18,7 @@ cls
 :bdb
 cls
 @echo off
-echo /=================v2025.7===========(Default)==========================/
+echo /=================v2025.8===========(Default)==========================/
 echo Welcome to desktop tools
 echo Key codes:
 echo =======================================================================
@@ -28,7 +29,6 @@ echo 4. rename the disk C (script need a start from administrator + change text 
 echo 5. run ALL files (be careful!)
 echo 6. kalendar
 echo 7. run all files (with cooldown)
-echo 8. make file as shell:startup
 echo 10. tic-tac-toe
 echo /=======================================================================/
 echo vx - credits
@@ -38,7 +38,15 @@ set /p keycode=Enter your key code...
 echo ^G
 
 if %keycode% equ 1 (
-start dsd
+dir /b %userprofile%\AppData\Local\Temp
+
+set /p delCode=Type 1 for delete files, or type 2 to continue...
+if !delCode! equ 1 (
+cls
+RMDIR /S /Q %userprofile%\AppData\Local\Temp
+echo Files deleted
+)
+pause
 )
 if %keycode% equ 2 (
 :: //FOLDER PRE-NAME HERE//
@@ -115,9 +123,26 @@ cls
 echo ONLINE SETUP
 echo 1. I am Player X (Starts first)
 echo 2. I am Player 0 (Wait for move)
+cls
 set /p side="Select your side: "
 set /p port="Enter Port (e.g., 12345): "
-set /p ip="Enter Friend's LOCAL IP: "
+cls
+if not exist last_ip.txt (
+    set /p ip="Enter Friend's LOCAL IP: "
+    Echo !ip!>last_ip.txt
+) else (
+    echo do you want to use last IP? 1 - yes, 2 - no
+    set /p wow="Enter 1 or 2... "
+    
+    if "!wow!"=="1" (
+        for /f "usebackq delims=" %%i in ("last_ip.txt") do (
+            set ip=%%i
+        )
+    ) else (
+        set /p ip="Enter Friend's LOCAL IP: "
+        Echo !ip!>last_ip.txt
+    )
+)
 
 if "%side%"=="1" (goto :loopX) else (goto :loop0)
 
