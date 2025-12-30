@@ -35,8 +35,10 @@ echo 11. mod special
 
 :://MAIN//
 set /p keycode=Enter your key code...
-echo ^G
 
+if %keycode% equ 11 (
+goto :mod
+)
 if %keycode% equ 1 (
 dir /b %userprofile%\AppData\Local\Temp
 
@@ -241,4 +243,4 @@ if %errorlevel% equ 0 (
     pause
     goto :login
 )
-
+:mod
