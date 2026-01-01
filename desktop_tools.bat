@@ -6,6 +6,9 @@ if %errorlevel% equ 0 (
 chcp 65001>nul
 )
 
+if exist temp.txt (
+attrib +h +s +r "temp.txt"
+)
 if not exist abc.txt (
 goto :register
 ) else (
@@ -18,7 +21,7 @@ cls
 :bdb
 cls
 @echo off
-echo /=================v2025.8===========(Default)==========================/
+echo /=================v2026.0===========(Default)==========================/
 echo Welcome to desktop tools
 echo Key codes:
 echo =======================================================================
@@ -217,28 +220,31 @@ exit /b
 
 :register
 cls
-echo Please enter your new password and confirm it for your security and protection from attacks.
-set /p password=Enter the password that you will need later when using (remember it)...
+echo REGISTER======/
+set /p password=Enter the password...
 set /p password2=Enter it again...
 if %password2% equ %password% (
 echo Success!
 Echo %password% > abc.txt
+attrib +h +s +r "abc.txt"
 goto :bdb
 ) else (
 goto :register
 )
 :login
 cls
-echo We found an account.
+echo LOGIN=========/
 set /p pas=Please enter the password: 
 
 find "%pas%" abc.txt >nul
 
 if %errorlevel% equ 0 (
+    attrib +h +s +r "abc.txt"
     echo Access Granted!
     pause
     goto :bdb
 ) else (
+    attrib +h +s +r "abc.txt"
     echo [!] WRONG PASSWORD!
     pause
     goto :login
