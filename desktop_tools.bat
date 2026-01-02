@@ -133,22 +133,7 @@ set /p side="Select your side: "
 cls
 set /p port="Enter Port (e.g., 12345): "
 cls
-if not exist last_ip.txt (
-    set /p ip="Enter Friend's LOCAL IP: "
-    Echo !ip!>last_ip.txt
-) else (
-    echo do you want to use last IP? 1 - yes, 2 - no
-    set /p wow="Enter 1 or 2... "
-    
-    if "!wow!"=="1" (
-        for /f "usebackq delims=" %%i in ("last_ip.txt") do (
-            set ip=%%i
-        )
-    ) else (
-        set /p ip="Enter Friend's LOCAL IP: "
-        Echo !ip!>last_ip.txt
-    )
-)
+set /p ip="Enter Friend's LOCAL IP: "
 
 if "%side%"=="1" (goto :loopX) else (goto :loop0)
 
