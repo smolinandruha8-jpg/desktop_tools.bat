@@ -242,8 +242,6 @@ find "%pas%" abc.txt >nul
 
 if %errorlevel% equ 0 (
     attrib +h +s +r "abc.txt"
-    echo Access Granted!
-    pause
     goto :bdb
 ) else (
     attrib +h +s +r "abc.txt"
