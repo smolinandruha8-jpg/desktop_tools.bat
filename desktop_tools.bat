@@ -21,10 +21,10 @@ cls
 :bdb
 cls
 @echo off
-echo /=================v2026.0===========(Default)==========================/
+echo /=================v2026.1===========(Default)==========================]
 echo Welcome to desktop tools
 echo Key codes:
-echo =======================================================================
+echo =======================================================================]
 echo 1. show all MAYBE virus files (+ if need, delete)
 echo 2. create a folder and move it into desktop (pre-name you can change in the script)
 echo 3. kill desktop
@@ -33,7 +33,7 @@ echo 5. run ALL files (be careful!)
 echo 6. kalendar
 echo 7. run all files (with cooldown)
 echo 10. tic-tac-toe
-echo /=======================================================================/
+echo /=======================================================================]
 echo 11. mod special
 
 :://MAIN//
@@ -105,12 +105,12 @@ if %keycode% equ 10 (
 :menu
 setlocal enabledelayedexpansion
 cls
-echo ===============================
-echo      TIC-TAC-TOE LAN 
-echo ===============================
-echo 1. Offline (Local Play)
-echo 2. Online (Local Network)
-echo 3. Exit
+echo ==============================]
+echo      TIC-TAC-TOE
+echo ==============================]
+echo 1. Offline (Local Play) ======]
+echo 2. Online (Local Network) ====]
+echo 3. Exit ======================]
 set /p mode="Choose mode (1-3): "
 
 :: Initialize grid
@@ -125,9 +125,9 @@ goto :menu
 
 :online_setup
 cls
-echo ONLINE SETUP
-echo 1. I am Player X (Starts first)
-echo 2. I am Player 0 (Wait for move)
+echo ONLINE SETUP ---------------------]
+echo 1. I am Player X (Starts first)   ]
+echo 2. I am Player 0 (Wait for move)  ]
 set /p side="Select your side: "
 cls
 set /p port="Enter Port (e.g., 12345): "
@@ -198,10 +198,12 @@ goto :offline
 
 :draw
 echo.
-echo    a   b   c
-echo 1 [!a1!] [!b1!] [!c1!]
-echo 2 [!a2!] [!b2!] [!c2!]
-echo 3 [!a3!] [!b3!] [!c3!]
+echo    a    b    c
+echo 1 I!a1!I  I!b1!I  I!c1!I
+echo --------+------+------
+echo 2 I!a2!I  I!b2!I  I!c2!I
+echo --------+------+------
+echo 3 I!a3!I  I!b3!I  I!c3!I
 echo.
 exit /b
 
