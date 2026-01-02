@@ -6,9 +6,6 @@ if %errorlevel% equ 0 (
 chcp 65001>nul
 )
 
-if exist temp.txt (
-attrib +h +s +r "temp.txt"
-)
 if not exist abc.txt (
 goto :register
 ) else (
@@ -21,7 +18,7 @@ cls
 :bdb
 cls
 @echo off
-echo /=================v2026.1===========(Default)==========================/
+echo /=================v2025.8===========(Default)==========================/
 echo Welcome to desktop tools
 echo Key codes:
 echo =======================================================================
@@ -133,7 +130,22 @@ set /p side="Select your side: "
 cls
 set /p port="Enter Port (e.g., 12345): "
 cls
-set /p ip="Enter Friend's LOCAL IP: "
+if not exist last_ip.txt (
+    set /p ip="Enter Friend's LOCAL IP: "
+    Echo !ip!>last_ip.txt
+) else (
+    echo do you want to use last IP? 1 - yes, 2 - no
+    set /p wow="Enter 1 or 2... "
+    
+    if "!wow!"=="1" (
+        for /f "usebackq delims=" %%i in ("last_ip.txt") do (
+            set ip=%%i
+        )
+    ) else (
+        set /p ip="Enter Friend's LOCAL IP: "
+        Echo !ip!>last_ip.txt
+    )
+)
 
 if "%side%"=="1" (goto :loopX) else (goto :loop0)
 
@@ -229,9 +241,8 @@ if %errorlevel% equ 0 (
     attrib +h +s +r "abc.txt"
     goto :bdb
 ) else (
-    attrib +h +s +r "abc.txt"
     echo [!] WRONG PASSWORD!
+    pause
     goto :login
 )
-:mod
 
