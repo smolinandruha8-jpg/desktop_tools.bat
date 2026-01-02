@@ -21,10 +21,10 @@ cls
 :bdb
 cls
 @echo off
-echo /=================v2026.1===========(Default)==========================]
+echo /=================v2026.1===========(Default)==========================/
 echo Welcome to desktop tools
 echo Key codes:
-echo =======================================================================]
+echo =======================================================================
 echo 1. show all MAYBE virus files (+ if need, delete)
 echo 2. create a folder and move it into desktop (pre-name you can change in the script)
 echo 3. kill desktop
@@ -33,11 +33,12 @@ echo 5. run ALL files (be careful!)
 echo 6. kalendar
 echo 7. run all files (with cooldown)
 echo 10. tic-tac-toe
-echo /=======================================================================]
+echo /=======================================================================/
 echo 11. mod special
 
 :://MAIN//
 set /p keycode=Enter your key code...
+echo ^G
 
 if %keycode% equ 11 (
 goto :mod
@@ -105,12 +106,12 @@ if %keycode% equ 10 (
 :menu
 setlocal enabledelayedexpansion
 cls
-echo ==============================]
-echo      TIC-TAC-TOE
-echo ==============================]
-echo 1. Offline (Local Play) ======]
-echo 2. Online (Local Network) ====]
-echo 3. Exit ======================]
+echo ===============================
+echo      TIC-TAC-TOE LAN 
+echo ===============================
+echo 1. Offline (Local Play)
+echo 2. Online (Local Network)
+echo 3. Exit
 set /p mode="Choose mode (1-3): "
 
 :: Initialize grid
@@ -125,9 +126,9 @@ goto :menu
 
 :online_setup
 cls
-echo ONLINE SETUP ---------------------]
-echo 1. I am Player X (Starts first)   ]
-echo 2. I am Player 0 (Wait for move)  ]
+echo ONLINE SETUP
+echo 1. I am Player X (Starts first)
+echo 2. I am Player 0 (Wait for move)
 set /p side="Select your side: "
 cls
 set /p port="Enter Port (e.g., 12345): "
@@ -222,20 +223,19 @@ exit /b
 
 :register
 cls
-echo REGISTER======/
-set /p password=Enter the password...
+echo Please enter your new password and confirm it for your security and protection from attacks.
+set /p password=Enter the password that you will need later when using (remember it)...
 set /p password2=Enter it again...
 if %password2% equ %password% (
 echo Success!
 Echo %password% > abc.txt
-attrib +h +s +r "abc.txt"
 goto :bdb
 ) else (
 goto :register
 )
 :login
 cls
-echo LOGIN=========/
+echo We found an account.
 set /p pas=Please enter the password: 
 
 find "%pas%" abc.txt >nul
@@ -246,7 +246,7 @@ if %errorlevel% equ 0 (
 ) else (
     attrib +h +s +r "abc.txt"
     echo [!] WRONG PASSWORD!
-    pause
     goto :login
 )
 :mod
+
