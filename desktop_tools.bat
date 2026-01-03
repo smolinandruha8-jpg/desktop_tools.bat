@@ -18,7 +18,7 @@ cls
 :bdb
 cls
 @echo off
-echo /=================v2025.8===========(Default)==========================/
+echo /=================v2026.2===========(Default)==========================/
 echo Welcome to desktop tools
 echo Key codes:
 echo =======================================================================
@@ -246,3 +246,10 @@ if %errorlevel% equ 0 (
     goto :login
 )
 :mod
+if not exist crazinstaller.bat (
+cls
+echo crazinstaller not found!
+echo please install API for install mods (crazinstaller)
+pause
+exit
+)
