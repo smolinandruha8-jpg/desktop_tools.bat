@@ -18,7 +18,7 @@ cls
 :bdb
 cls
 @echo off
-echo /=================v2026.2===========(Default)==========================/
+echo /=================v2026.3===========(Default)==========================/
 echo Welcome to desktop tools
 echo Key codes:
 echo =======================================================================
@@ -246,10 +246,31 @@ if %errorlevel% equ 0 (
     goto :login
 )
 :mod
-if not exist crazinstaller.bat (
 cls
-echo crazinstaller not found!
-echo please install API for install mods (crazinstaller)
+setlocal enabledelayedexpansion
+set "filename=mods_c.txt"
+set "count=0"
+
+echo MODS ===========================================
+for /f "usebackq tokens=*" %%a in ("%filename%") do (
+    set /a count+=1
+    set "name[!count!]=%%a"
+    echo !count!. %%a
+)
+if %count% equ 0 (
+echo No mods found!
 pause
-exit
+goto :bdb
+)
+
+echo.
+set /p "choice=Enter number: "
+
+if defined name[%choice%] (
+    set "target=!name[%choice%]!"
+    goto :!target!
+) else (
+    echo Invalid selection.
+    pause
+    exit /b
 )
